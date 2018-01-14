@@ -1,0 +1,53 @@
+program -> statement* EOF;
+
+declaration -> funDecl | varDecl | statement;
+
+funDecl -> "fun" function;
+
+function -> IDENTIFIER? "(" parameters? ")" block;
+
+parameters -> IDENTIFIER ( "," IDENTIFIER )*;
+
+varDecl -> "var" IDENTIFIER ("=" ( expression | funDecl ))? ";";
+
+statement -> exprStmt | ifStmt | whileStmt | forStmt | breakStmt | printStmt | returnStmt | block;
+
+exprStmt -> ( expression | funDecl ) ";";
+
+ifStmt -> "if" "(" expression ")" statement ( "else" statement )?;
+
+whileStmt -> "while" "(" expression ")" statement;
+
+forStmt -> "for" "(" ( varDecl | exprStmt | ";" ) expression? ";" expression? ")" statement;
+
+breakStmt -> "break" ";";
+
+printStmt -> "print" expression ";";
+
+returnStmt -> "return" expression? ";";
+
+block -> "{" declaration* "}";
+
+expression -> assignment;
+
+assignment -> identifier "=" assignment | logic_or | funDecl;
+
+logic_or -> logic_and ( "or" logic_and )*;
+
+logic_and -> equality ( "and" equality )*;
+
+equality -> comparison ( ("!=" | "==") comparison)*;
+
+comparison -> addition ( (">" | ">=" | "<" | "<=") addition)*;
+
+addition -> multiplication ( ("+" | "-") multiplication)*;
+
+multiplication -> unary ( ("*" | "/") unary)*;
+
+unary -> ("!" | "-") unary | call;
+
+call -> primary ( "(" arguments? ")" )*;
+
+arguments -> ( expression | funDecl ) ( "," ( expression | funDecl ) )*;
+
+primary -> NUMBER | STRING |  "true" | "false" | "nil" | "(" expression ")" | IDENTIFIER;

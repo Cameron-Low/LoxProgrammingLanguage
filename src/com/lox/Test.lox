@@ -1,0 +1,18 @@
+class Sandwhich {
+    init(arg) {
+        print arg;
+    }
+}
+
+class Bagel < Sandwhich {
+    init(arg) {
+        super.init(arg);
+    }
+
+    eat() {
+        print this;
+    }
+
+}
+
+var bagel = Bagel("Here is a bagel");
